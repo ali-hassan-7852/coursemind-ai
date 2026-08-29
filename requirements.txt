@@ -1,11 +1,9 @@
---extra-index-url https://download.pytorch.org/whl/cpu
-torch
+fastembed
 fastapi
 uvicorn[standard]
 sqlalchemy
 psycopg2-binary
 pgvector
-sentence-transformers
 pypdf
 python-dotenv
 passlib[bcrypt]==1.7.4
