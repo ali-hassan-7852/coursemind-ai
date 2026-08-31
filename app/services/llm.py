@@ -16,13 +16,12 @@ def generate_answer(question: str, context_chunks: List[str]) -> str:
     context = "\n\n".join(context_chunks)
 
     prompt = (
-    "Answer the question using only the context below. "
-    "If the answer isn't in the context, say you don't have enough information.\n\n"
-    "Formatting rules: write in standard Markdown. For bold text always use "
-    "matching double asterisks like **this** - never a single asterisk, and "
-    "never mismatch the number of asterisks on each side. Prefer short "
-    "paragraphs and simple bullet points over tables; only use a table if "
-    "the answer is genuinely tabular data.\n\n"
+    "Answer the question using only the context below, in plain "
+    "conversational sentences - like you're explaining it out loud to a "
+    "student. Do not use any Markdown formatting: no **bold**, no bullet "
+    "points, no numbered lists, no headings, no tables. Just write it as "
+    "normal flowing paragraphs. If the answer isn't in the context, say "
+    "you don't have enough information.\n\n"
     f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"
     )
 
