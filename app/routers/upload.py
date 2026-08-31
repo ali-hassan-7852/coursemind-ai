@@ -54,3 +54,25 @@ async def upload_document(
         filename=document.filename,
         chunks_created=len(text_chunks),
     )
+
+@router.delete("/{document_id}")
+def delete_document(
+    document_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    document = (
+        db.query(Document)
+        .filter(Document.id == document_id, Document.user_id == current_user.id)
+        .first()
+    )
+    # 404 either way (wrong id, or someone else's document) - never reveal
+    # whether a document exists if it isn't yours.
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    filename = document.filename
+    db.delete(document)  # cascades to delete its chunks too, via the relationship
+    db.commit()
+
+    return {"detail": f"'{filename}' was deleted"}
